@@ -7,11 +7,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * @Description TODO
+ * @Description Spring定时任务
  * @Date 2020/8/27  16:21
  **/
-@Component
-public class DemoD {
+//@Component
+public class ScheduleJob {
     SimpleDateFormat simpleDateFormat= new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 //    @Scheduled(cron = "0/5 * * * * ?")

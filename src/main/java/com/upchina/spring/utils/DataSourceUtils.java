@@ -1,4 +1,4 @@
-package com.upchina.spring.jdbc;
+package com.upchina.spring.utils;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbcp2.BasicDataSourceFactory;
