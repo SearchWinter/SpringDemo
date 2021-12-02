@@ -1,11 +1,7 @@
 package com.upchina.spring.jdbc.repository;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.context.annotation.Bean;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.relational.core.mapping.Table;
 
