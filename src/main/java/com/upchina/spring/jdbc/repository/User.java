@@ -19,6 +19,7 @@ public class User {
     private String name;
     private String pwd;
     private int age;
+    private String role;
     @LastModifiedDate
     private Date update_time;
 }

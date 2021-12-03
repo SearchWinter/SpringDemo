@@ -2,6 +2,7 @@ package com.upchina.spring.jdbc.repository;
 
 import com.upchina.spring.common.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -20,6 +21,9 @@ public class UserController {
 
     @Autowired
     PersonalRepository personalRepository;
+
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
     @ResponseBody
     @RequestMapping("/getById")
@@ -51,12 +55,21 @@ public class UserController {
         return "success save user";
     }
 
-    //包含id，就是更新； 但如果id在表中不存在的话就会报错
+    /**
+     * save方法注意事项：
+     * 1、包含id，就是更新； 但如果id在表中不存在的话就会报错
+     * 2、没有给定值的字段数据会清空 String->null int->0
+     */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public CommonResult updateUser(@RequestBody User user) {
         //单条
-        userRepository.save(user);
-        return CommonResult.success("更新成功", user);
+        boolean exists = userRepository.existsUserByName(user.getName());
+        if (exists) {
+            return CommonResult.error("数据已经存在!", user);
+        } else {
+            userRepository.save(user);
+            return CommonResult.success("更新成功", user);
+        }
     }
 
     @RequestMapping("/getUses")
@@ -69,6 +82,19 @@ public class UserController {
     public CommonResult getRoleUsers(@RequestParam int roleId) {
         List<RoleUser> roleUsers = personalRepository.getRoleUser(roleId);
         return CommonResult.success("查询成功", roleUsers);
+    }
+
+    /**
+     * 1、RequestBody 传入的对象，JOSN中key和类相对应，可以没有会自动补充成一个完整的对象，默认值：String -> null int->0
+     */
+    @RequestMapping("/updateUser2")
+    public CommonResult updateUser2(@RequestBody User user) {
+        try {
+            userRepository.updateUser(user.getName(), user.getAge(), user.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CommonResult.success("更新成功", user);
     }
 
 
