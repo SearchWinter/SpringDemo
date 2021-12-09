@@ -97,5 +97,34 @@ public class UserController {
         return CommonResult.success("更新成功", user);
     }
 
+    @RequestMapping("/deleteUser")
+    public CommonResult deleteUser(@RequestBody User user) {
+        try {
+            //此方法关键是要获取主键：DELETE FROM `t_user` WHERE `t_user`.`id` = ?
+            userRepository.delete(user);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return CommonResult.success("删除成功", user);
+    }
+
+    @RequestMapping("/deleteUsers")
+    public int deleteUsers(@RequestParam int age) {
+        try {
+            userRepository.deleteUsersById(age);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 1;
+    }
+
+    @RequestMapping("/getUser2")
+    public CommonResult getUser2(@RequestParam String age, @RequestParam String role) {
+        List<User> user = personalRepository.getUserByRole(age, role);
+        for(User user1:user){
+            System.out.println(user1);
+        }
+        return CommonResult.success("查询成功", user);
+    }
 
 }
