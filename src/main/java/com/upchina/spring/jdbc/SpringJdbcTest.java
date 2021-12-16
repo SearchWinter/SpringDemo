@@ -44,6 +44,12 @@ public class SpringJdbcTest {
         this.jdbcTemplate.update(sql, "002", "b");
     }
 
+    @Test
+    public void deleteTest(){
+        String sql = "delete from t_test where uid=?";
+        this.jdbcTemplate.update(sql, "003");
+    }
+
     /** 批量插入数据*/
     @Test
     public void batchInsertTest(){
@@ -54,11 +60,17 @@ public class SpringJdbcTest {
         users.add(user1);
         users.add(user2);
         users.add(user3);
-        int[] ints = this.jdbcTemplate.batchUpdate("insert into t_test(uid,name ) values(?,?)", new BatchPreparedStatementSetter() {
+        insertBatch(users);
+    }
+    public void insertBatch(final List<User> users){
+
+        String sql = "INSERT INTO t_test (uid, name) VALUES (?, ?)";
+
+        this.jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
+
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                System.out.println(i);
-                System.out.println(users.get(i));
+                User customer = users.get(i);
                 ps.setString(1, users.get(i).uid);
                 ps.setString(2, users.get(i).name);
             }
@@ -69,9 +81,6 @@ public class SpringJdbcTest {
                 return users.size();
             }
         });
-        for(int i:ints){
-            System.out.println(i);
-        }
     }
 
     @Test
@@ -101,7 +110,7 @@ public class SpringJdbcTest {
         JSONArray jsonArray = new JSONArray();
         for(Map<String,Object> map:list){
             Object json = JSON.toJSON(map);
-            System.out.println(json);
+            System.out.println(map);
             jsonArray.add(map);
         }
         System.out.println(jsonArray);
@@ -130,6 +139,16 @@ public class SpringJdbcTest {
         } catch (Exception e) {
             System.out.println("**********");
             e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void queryTest2(){
+        String sql = "select uid from t_test";
+        List<Map<String, Object>> maps = this.jdbcTemplate.queryForList(sql);
+        for(Map<String,Object> map:maps){
+            Object uid = map.get("uid");
+            System.out.println(uid);
         }
     }
 }
