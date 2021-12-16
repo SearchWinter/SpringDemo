@@ -16,6 +16,8 @@ public class HelloControl {
     @ResponseBody
     @RequestMapping("/hello")
     public Person hello() {
+        //页面上显示的返回值是：由该对象各个属性值组成的json对象
+        // {"name":"tom","age":"10","addr":"wh"}
         return person;
     }
 }
