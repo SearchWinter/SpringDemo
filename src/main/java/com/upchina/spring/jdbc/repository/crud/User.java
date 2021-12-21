@@ -1,6 +1,7 @@
-package com.upchina.spring.jdbc.repository;
+package com.upchina.spring.jdbc.repository.crud;
 
 import lombok.Data;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.relational.core.mapping.Table;
@@ -20,6 +21,8 @@ public class User {
     private String pwd;
     private int age;
     private String role;
+    @CreatedBy
+    private String create_user;
     @LastModifiedDate
     private Date update_time;
 }

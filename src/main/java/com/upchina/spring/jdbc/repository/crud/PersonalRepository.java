@@ -1,4 +1,4 @@
-package com.upchina.spring.jdbc.repository;
+package com.upchina.spring.jdbc.repository.crud;
 
 import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;

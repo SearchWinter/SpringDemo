@@ -1,4 +1,4 @@
-package com.upchina.spring.jdbc.repository;
+package com.upchina.spring.jdbc.repository.crud;
 
 import com.upchina.spring.common.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;

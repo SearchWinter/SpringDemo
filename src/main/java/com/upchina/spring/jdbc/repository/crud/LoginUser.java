@@ -1,4 +1,4 @@
-package com.upchina.spring.jdbc.repository;
+package com.upchina.spring.jdbc.repository.crud;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

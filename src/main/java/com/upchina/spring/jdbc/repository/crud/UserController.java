@@ -1,11 +1,15 @@
-package com.upchina.spring.jdbc.repository;
+package com.upchina.spring.jdbc.repository.crud;
 
 import com.upchina.spring.common.CommonResult;
+import com.upchina.spring.jdbc.repository.page.PageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -23,7 +27,7 @@ public class UserController {
     PersonalRepository personalRepository;
 
     @Autowired
-    JdbcTemplate jdbcTemplate;
+    PageRepository pageRepository;
 
     @ResponseBody
     @RequestMapping("/getById")
