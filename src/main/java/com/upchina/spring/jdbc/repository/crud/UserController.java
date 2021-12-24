@@ -76,8 +76,13 @@ public class UserController {
         }
     }
 
+    /**
+     * 接口中需要传基本数据类型的地方，尽量使用其包装类  以免给一些默认值，影响判断
+     * 包装类不给值的情况下就是Null方便判断
+     * */
     @RequestMapping("/getUses")
-    public CommonResult getUsers(@RequestParam int age) {
+//    public CommonResult getUsers(@RequestParam int age) {
+    public CommonResult getUsers(@RequestParam Integer age) {
         List<User> users = personalRepository.findUser(age);
         return CommonResult.success("更新成功", users);
     }
