@@ -64,7 +64,8 @@ public class EasyPoiController {
         memberList.add(member);
         memberList.add(member2);
 
-        ExportParams params = new ExportParams("会员列表", "会员列表", ExcelType.XSSF);
+        // 添加了title,导出的表第一行数据就是title  可以设置为null,就没有这个title
+        ExportParams params = new ExportParams(null, "会员列表", ExcelType.XSSF);
         map.put(NormalExcelConstants.DATA_LIST, memberList);
         map.put(NormalExcelConstants.CLASS, Member.class);
         map.put(NormalExcelConstants.PARAMS, params);

@@ -1,8 +1,8 @@
 package com.upchina.spring.security;
 
 import com.upchina.spring.common.CommonResult;
-import com.upchina.spring.jdbc.repository.User;
-import com.upchina.spring.jdbc.repository.UserRepository;
+import com.upchina.spring.jdbc.repository.crud.User;
+import com.upchina.spring.jdbc.repository.crud.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

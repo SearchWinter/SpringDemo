@@ -70,6 +70,7 @@ public class SpringJdbcTest {
 
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
+                System.out.println("list int :"+i);
                 User customer = users.get(i);
                 ps.setString(1, users.get(i).uid);
                 ps.setString(2, users.get(i).name);
@@ -85,7 +86,7 @@ public class SpringJdbcTest {
 
     @Test
     public void queryTest() {
-        String sql2 = "select count(*) from t_test";
+        String sql2 = "select count(*) from t_group";
         String s = this.jdbcTemplate.queryForObject(sql2, String.class);
         System.out.println(s);
     }

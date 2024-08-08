@@ -1,6 +1,6 @@
 package com.upchina.spring.security;
 
-import com.upchina.spring.jdbc.repository.User;
+import com.upchina.spring.jdbc.repository.crud.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
