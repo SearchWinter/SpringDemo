@@ -8,11 +8,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.object.BatchSqlUpdate;
 
 import javax.sql.DataSource;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,14 +47,16 @@ public class SpringJdbcTest {
     }
 
     @Test
-    public void deleteTest(){
+    public void deleteTest() {
         String sql = "delete from t_test where uid=?";
         this.jdbcTemplate.update(sql, "003");
     }
 
-    /** 批量插入数据*/
+    /**
+     * 批量插入数据
+     */
     @Test
-    public void batchInsertTest(){
+    public void batchInsertTest() {
         User user1 = new User("003", "c");
         User user2 = new User("004", "d");
         User user3 = new User("005", "e");
@@ -62,7 +66,8 @@ public class SpringJdbcTest {
         users.add(user3);
         insertBatch(users);
     }
-    public void insertBatch(final List<User> users){
+
+    public void insertBatch(final List<User> users) {
 
         String sql = "INSERT INTO t_test (uid, name) VALUES (?, ?)";
 
@@ -70,7 +75,7 @@ public class SpringJdbcTest {
 
             @Override
             public void setValues(PreparedStatement ps, int i) throws SQLException {
-                System.out.println("list int :"+i);
+                System.out.println("list int :" + i);
                 User customer = users.get(i);
                 ps.setString(1, users.get(i).uid);
                 ps.setString(2, users.get(i).name);
@@ -82,6 +87,19 @@ public class SpringJdbcTest {
                 return users.size();
             }
         });
+    }
+
+    @Test
+    public void batchSqlUpdate() {
+        BatchSqlUpdate batchSqlUpdate = new BatchSqlUpdate(this.jdbcTemplate.getDataSource(), "insert into t_test(uid,name,op_user) values(?,?,?)");
+        batchSqlUpdate.setBatchSize(1000);
+        batchSqlUpdate.setTypes(new int[]{Types.VARCHAR, Types.VARCHAR, Types.VARCHAR});
+
+        for (int i = 1; i <= 2000; i++) {
+            batchSqlUpdate.update(String.valueOf(i), "uid_" + i, String.valueOf(i));
+        }
+        batchSqlUpdate.flush();
+
     }
 
     @Test
@@ -109,7 +127,7 @@ public class SpringJdbcTest {
         String sql4 = "select uid,name from t_test";
         List<Map<String, Object>> list = this.jdbcTemplate.queryForList(sql4);
         JSONArray jsonArray = new JSONArray();
-        for(Map<String,Object> map:list){
+        for (Map<String, Object> map : list) {
             Object json = JSON.toJSON(map);
             System.out.println(map);
             jsonArray.add(map);
@@ -144,10 +162,10 @@ public class SpringJdbcTest {
     }
 
     @Test
-    public void queryTest2(){
+    public void queryTest2() {
         String sql = "select uid from t_test";
         List<Map<String, Object>> maps = this.jdbcTemplate.queryForList(sql);
-        for(Map<String,Object> map:maps){
+        for (Map<String, Object> map : maps) {
             Object uid = map.get("uid");
             System.out.println(uid);
         }
